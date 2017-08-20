@@ -5,9 +5,9 @@ using UnityEngine;
 public class scrFreeze : MonoBehaviour {
 	bool FreezIsProcess;
 	//bool FreezStage2;
-	float freezeRadius = 6f;
+	float freezeRadius;
 	float freezeHeight = 0.05f;
-	float freezeTime = 0.7f;
+	float freezeTime = 0.7f; //время распространения поля заморозки
 	float freezeTime2;
 	float fTmp;
 	Vector3 tV3;
@@ -16,6 +16,8 @@ public class scrFreeze : MonoBehaviour {
 	void Start () {
 		//FreezIsProcess = false;
 		//FreezStage2 = false;
+		freezeRadius = scrGlobal.freezeRadius;
+		freezeTime = scrGlobal.freezeTime;
 		freezeTime2 = freezeTime + freezeTime;
 		fTmp = 0;
 		tV3 = new Vector3(0.1f,freezeHeight,0.1f);
@@ -57,7 +59,8 @@ public class scrFreeze : MonoBehaviour {
 		}
 	}
 
-	public void freeze(){
+	public void freeze(float _freezeRadius){
+		freezeRadius = _freezeRadius;
 		if (!FreezIsProcess){
 			Debug.Log("freez 1");
 			FreezIsProcess = true;
@@ -65,9 +68,5 @@ public class scrFreeze : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider col){
-		if (col.CompareTag("bot") || col.CompareTag("player")){
-			col.gameObject.GetComponent<scrBall>().youFreeze();
-		}
-	}
+
 }

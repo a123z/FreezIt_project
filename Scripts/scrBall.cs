@@ -8,12 +8,16 @@ public class scrBall : MonoBehaviour {
 
 
 	float freezeTime;//время до окончания заморозки
+	float motionForce = 5f;
+	float ultraForceTime;
+	float ultraFreezeRadiusTime=0;
 
 	// Use this for initialization
 	void Start () {
 		//objFreeze = gameObject.transform.Find("wave").gameObject;
 		if (pfFreeze == null) Debug.LogError("pfFreeze is null");
 		objFreeze = null;
+		motionForce = scrGlobal.motionForce; //initial force is same for all
 	}
 	
 	// Update is called once per frame
@@ -25,16 +29,25 @@ public class scrBall : MonoBehaviour {
 		if (freezeTime>0){
 			freezeTime -= Time.fixedDeltaTime;
 		}
+		if (ultraForceTime>0){
+			ultraForceTime -= Time.fixedDeltaTime;
+			if (ultraForceTime<=0) motionForce = scrGlobal.motionForce;
+		}
+		if (ultraFreezeRadiusTime>0){
+			ultraFreezeRadiusTime -= Time.fixedDeltaTime;
+		}
 	}
 
 	public void jump(){
 		if (gameObject.transform.position.y < 1.1f){
-			gameObject.transform.GetComponent<Rigidbody>().AddForce(0,20,0);
+			gameObject.transform.GetComponent<Rigidbody>().AddForce(0,50,0);
 		}
 	}
 
-	public void go(Vector3 force){
-		Vector3 tV3 = new Vector3(force.x,0,force.z);
+	///need comment that 
+	public void go(Vector3 direction){
+		Vector3 tV3 = new Vector3(direction.x,0,direction.z);
+		tV3 = tV3.normalized * motionForce;
 		gameObject.transform.GetComponent<Rigidbody>().AddForce(tV3);
 	}
 
@@ -42,9 +55,9 @@ public class scrBall : MonoBehaviour {
 		if (transform.position.y <= 1f && objFreeze == null){
 			objFreeze = GameObject.Instantiate(pfFreeze,new Vector3(transform.position.x,0.05f,transform.position.z), Quaternion.identity);
 			if (objFreeze != null){
-				Debug.Log("beg freez");
-				objFreeze.GetComponent<scrFreeze>().freeze();
-				Debug.Log("end freez");
+				if (ultraFreezeRadiusTime<=0){
+					objFreeze.GetComponent<scrFreeze>().freeze(scrGlobal.freezeRadius);
+				} else objFreeze.GetComponent<scrFreeze>().freeze(scrGlobal.ultraFreezeRadius);
 			} else Debug.Log("objFreeze is null");
 		}
 	}
@@ -55,9 +68,12 @@ public class scrBall : MonoBehaviour {
 		} else return false;
 	}
 
-	public void youFreeze(float _freezeTime = 7f){
-		if (!isFreeze()){ //надо ли не замораживать если уже заморожен???
-			freezeTime = _freezeTime;
-		}
+	public void SetUltraForce(){
+		ultraForceTime += scrGlobal.ultraForceTime;
+		motionForce = scrGlobal.ultraMotionForce;
+	}
+
+	public void setUltraFreezeRadius(){
+		ultraFreezeRadiusTime = scrGlobal.ultraFreezeRadiusTime;
 	}
 }

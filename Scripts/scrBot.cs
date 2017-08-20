@@ -7,11 +7,17 @@ public class scrBot : MonoBehaviour {
 
 	GameObject goRadar;
 	GameObject goTarget;
+        
+	float radarTime = 0;
+	Vector3 justDirection;
+	Vector3 tV3;
+
 
 	// Use this for initialization
 	void Start () {
-		goRadar = transform.Find("radar").gameObject;
+		goRadar = transform.Find("radar").gameObject; //find child gaomeObject
 		if (goRadar == null) Debug.LogError("goRadar not found!");
+		
 	}
 	
 	// Update is called once per frame
@@ -21,17 +27,26 @@ public class scrBot : MonoBehaviour {
 
 	void FixedUpdate(){
 		if (goTarget == null){
-			FindTarget();
-		}
+			if (radarTime<=0){
+				FindTarget();
+				if (goTarget == null) justGo();
+			} else radarTime -= Time.fixedDeltaTime;
+		} else {
+			go2target();
+			}
 	}
 
 	void go2target(){
 		if (goTarget != null){
-			
+		        gameObject.GetComponent<scrBall>().go(gameObject.transform.position - goTarget.transform.position);
 		}
 	}
 
-	public void FindTarget(){
+	void justGo(){
+	        gameObject.GetComponent<scrBall>().go(justDirection);
+	}
+
+	void FindTarget(){
 		goTarget = goRadar.GetComponent<scrRadar>().FindTarget(radarRadius);
 	}
 
@@ -39,5 +54,8 @@ public class scrBot : MonoBehaviour {
 		goTarget = target;
 	}
 
+	public void setJustDirection(Vector3 _direction){
+		justDirection =_direction;
+	}
 
 }
