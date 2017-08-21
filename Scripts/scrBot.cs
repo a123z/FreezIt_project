@@ -28,7 +28,8 @@ public class scrBot : MonoBehaviour {
 	void FixedUpdate(){
 		if (goTarget == null){
 			if (radarTime<=0){
-				FindTarget();
+				Debug.Log("Run radar");
+				//FindTarget();
 				if (goTarget == null) justGo();
 			} else radarTime -= Time.fixedDeltaTime;
 		} else {

@@ -31,9 +31,9 @@ public class scrRadar : MonoBehaviour {
 		Component cRCol = gameObject.GetComponent<SphereCollider>();
 		goTarget = null;
 
-		while (rr < raRadius && goTarget == null){
+		//while (rr < raRadius && goTarget == null){
 			((SphereCollider)cRCol).radius += 0.5f;
-		} 
+		//} 
 		((SphereCollider)cRCol).radius = 0;
 		return goTarget;
 	}
