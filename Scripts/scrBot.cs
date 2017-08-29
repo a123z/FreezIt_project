@@ -44,7 +44,15 @@ public class scrBot : MonoBehaviour {
 	}
 
 	void justGo(){
-	        gameObject.GetComponent<scrBall>().go(justDirection);
+	        
+		if (transform.position.x > scrGloabl.arenaHalfSizeX) {
+			
+		} else if (transform.position.x < -scrGloabl.arenaHalfSizeX) {
+		} else if (transform.position.z > scrGloabl.arenaHalfSizeZ) {
+		} else if (transform.position.z < -scrGloabl.arenaHalfSizeZ) {
+		}
+
+		gameObject.GetComponent<scrBall>().go(justDirection);
 	}
 
 	void FindTarget(){

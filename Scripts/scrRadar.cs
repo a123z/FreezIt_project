@@ -27,14 +27,24 @@ public class scrRadar : MonoBehaviour {
 	}
 
 	public GameObject FindTarget(float raRadius){ 
+		
+		
+		goTarget = null;
+		StartCoroutine(radarPing(raRadius));
+		//while (rr < raRadius && goTarget == null){
+		//	((SphereCollider)cRCol).radius += 0.5f;
+		//} 
+		
+		return goTarget;
+	}
+
+	IEnumerator radarPing(float _radius){
 		float rr = 0;
 		Component cRCol = gameObject.GetComponent<SphereCollider>();
-		goTarget = null;
-
-		//while (rr < raRadius && goTarget == null){
+		while (rr < _radius && goTarget == null){
 			((SphereCollider)cRCol).radius += 0.5f;
-		//} 
+			yield return new WaitForFixedUpdate();
+		} 
 		((SphereCollider)cRCol).radius = 0;
-		return goTarget;
 	}
 }

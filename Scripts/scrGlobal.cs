@@ -12,6 +12,8 @@ public static class scrGlobal {
 
 	public static float freezeTime = 0.7f;
 	public static float ultraFreezeRadiusTime = 2f;
-
+	
+	public static float arenaHalfSizeX = 40f;
+	public static float arenaHalfSizeZ = 40f;
 
 }
