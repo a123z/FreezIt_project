@@ -29,7 +29,7 @@ public class scrBot : MonoBehaviour {
 		if (goTarget == null){
 			if (radarTime<=0){
 				Debug.Log("Run radar");
-				//FindTarget();
+				FindTarget();
 				if (goTarget == null) justGo();
 			} else radarTime -= Time.fixedDeltaTime;
 		} else {
@@ -45,11 +45,11 @@ public class scrBot : MonoBehaviour {
 
 	void justGo(){
 	        
-		if (transform.position.x > scrGloabl.arenaHalfSizeX) {
+		if (transform.position.x > scrGlobal.arenaHalfSizeX) {
 			
-		} else if (transform.position.x < -scrGloabl.arenaHalfSizeX) {
-		} else if (transform.position.z > scrGloabl.arenaHalfSizeZ) {
-		} else if (transform.position.z < -scrGloabl.arenaHalfSizeZ) {
+		} else if (transform.position.x < -scrGlobal.arenaHalfSizeX) {
+		} else if (transform.position.z > scrGlobal.arenaHalfSizeZ) {
+		} else if (transform.position.z < -scrGlobal.arenaHalfSizeZ) {
 		}
 
 		gameObject.GetComponent<scrBall>().go(justDirection);

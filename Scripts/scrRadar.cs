@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class scrRadar : MonoBehaviour {
-
-
 	GameObject goTarget;
+
+
 	// Use this for initialization
 	void Start () {
 		
@@ -17,7 +17,9 @@ public class scrRadar : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col){
+		
 		if (col.gameObject.tag == "bot" || col.gameObject.tag == "player"){
+			//Debug.Log("trigger tag");
 			//if (col.gameObject.transform.position.y <=1.1f){ //не используем - ловим цель и в т.ч. в прыжке
 			if ( !col.gameObject.GetComponent<scrBall>().isFreeze()){ //если не в заморозке
 				goTarget = col.gameObject;
@@ -28,8 +30,9 @@ public class scrRadar : MonoBehaviour {
 
 	public GameObject FindTarget(float raRadius){ 
 		
-		
-		goTarget = null;
+
+		//if () //обнулять надо только 1 раз при запуске корутины потом просто пропускать пока не найдется цель
+			goTarget = null;
 		StartCoroutine(radarPing(raRadius));
 		//while (rr < raRadius && goTarget == null){
 		//	((SphereCollider)cRCol).radius += 0.5f;

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class scrBall : MonoBehaviour {
+	public bool isPlayer = false;
 	public GameObject pfFreeze;
+	public GameObject pfRadar;
 	GameObject objFreeze;
 
 
@@ -13,11 +15,31 @@ public class scrBall : MonoBehaviour {
 	float ultraFreezeRadiusTime=0;
 
 	// Use this for initialization
+	void Awake(){
+		if (isPlayer){
+			gameObject.GetComponent<scrBot>().enabled = false;
+			gameObject.GetComponent<scrController>().enabled = true;
+			gameObject.GetComponent<scrPlayer>().enabled = true;
+			gameObject.GetComponent<Renderer>().material.color = new Color32(177,253,184,255);
+		}
+		else{
+			gameObject.GetComponent<scrBot>().enabled = true;
+			gameObject.GetComponent<scrController>().enabled = false;
+			gameObject.GetComponent<scrPlayer>().enabled = false;
+			gameObject.GetComponent<Renderer>().material.color = new Color32(248,212,147,255);
+			GameObject pfR = Instantiate(pfRadar);
+			pfR.transform.parent = gameObject.transform;
+			pfR.name = "radar";
+		}
+	}
+
 	void Start () {
 		//objFreeze = gameObject.transform.Find("wave").gameObject;
 		if (pfFreeze == null) Debug.LogError("pfFreeze is null");
 		objFreeze = null;
 		motionForce = scrGlobal.motionForce; //initial force is same for all
+
+
 	}
 	
 	// Update is called once per frame
@@ -35,6 +57,10 @@ public class scrBall : MonoBehaviour {
 		}
 		if (ultraFreezeRadiusTime>0){
 			ultraFreezeRadiusTime -= Time.fixedDeltaTime;
+		}
+
+		if (gameObject.transform.position.y < -30f){
+			doDeath();
 		}
 	}
 
@@ -75,5 +101,12 @@ public class scrBall : MonoBehaviour {
 
 	public void setUltraFreezeRadius(){
 		ultraFreezeRadiusTime = scrGlobal.ultraFreezeRadiusTime;
+	}
+
+	public void doDeath(){
+		gameObject.transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
+		gameObject.transform.GetComponent<Rigidbody>().ResetInertiaTensor();
+		gameObject.transform.position = new Vector3(0,10,0);
+
 	}
 }
