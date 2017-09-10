@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class scrBot : MonoBehaviour {
-	public float radarRadius = 10f;
+	
 
 	GameObject goRadar;
 	GameObject goTarget;
         
-	float radarTime = 0;
+	float radarTime = scrGlobal.radarTimeRepeat;
+	float radarRadius = scrGlobal.radarRadius;
 	Vector3 justDirection;
 	Vector3 tV3;
 
@@ -17,7 +18,6 @@ public class scrBot : MonoBehaviour {
 	void Start () {
 		goRadar = transform.Find("radar").gameObject; //find child gaomeObject
 		if (goRadar == null) Debug.LogError("goRadar not found!");
-		
 	}
 	
 	// Update is called once per frame
@@ -30,6 +30,7 @@ public class scrBot : MonoBehaviour {
 			if (radarTime<=0){
 				Debug.Log("Run radar");
 				FindTarget();
+				radarTime = scrGlobal.radarTimeRepeat;
 				if (goTarget == null) justGo();
 			} else radarTime -= Time.fixedDeltaTime;
 		} else {
@@ -39,7 +40,7 @@ public class scrBot : MonoBehaviour {
 
 	void go2target(){
 		if (goTarget != null){
-		        gameObject.GetComponent<scrBall>().go(gameObject.transform.position - goTarget.transform.position);
+			gameObject.GetComponent<scrBall>().go(goTarget.transform.position - gameObject.transform.position);
 		}
 	}
 
@@ -60,6 +61,7 @@ public class scrBot : MonoBehaviour {
 	}
 
 	public void SetTarget(GameObject target){ //вызывается из скрипта радара при коллизии коллайдера радара с целью
+		Debug.Log("Set target (scrBot)");
 		goTarget = target;
 	}
 

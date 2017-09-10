@@ -6,6 +6,7 @@ public static class scrGlobal {
 	public static float motionForce = 20f;
 	public static float ultraMotionForce = 30f;
 	public static float ultraForceTime = 15f;
+	public static float maxSpeedSqr = 25f*25f;
 
 	public static float freezeRadius = 10f;
 	public static float ultraFreezeRadius = 15f;
@@ -16,4 +17,6 @@ public static class scrGlobal {
 	public static float arenaHalfSizeX = 40f;
 	public static float arenaHalfSizeZ = 40f;
 
+	public static float radarTimeRepeat = 3f; //3 sec for repeat radar scan
+	public static float radarRadius = 20f;
 }

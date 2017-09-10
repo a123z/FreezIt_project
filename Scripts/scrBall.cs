@@ -27,7 +27,7 @@ public class scrBall : MonoBehaviour {
 			gameObject.GetComponent<scrController>().enabled = false;
 			gameObject.GetComponent<scrPlayer>().enabled = false;
 			gameObject.GetComponent<Renderer>().material.color = new Color32(248,212,147,255);
-			GameObject pfR = Instantiate(pfRadar);
+			GameObject pfR = Instantiate(pfRadar, gameObject.transform.position, Quaternion.identity);
 			pfR.transform.parent = gameObject.transform;
 			pfR.name = "radar";
 		}
@@ -70,11 +70,17 @@ public class scrBall : MonoBehaviour {
 		}
 	}
 
-	///need comment that 
+	/// <summary>
+	/// Move ball in the direction.
+	/// Work for player controller and for bot too.
+	/// </summary>
+	/// <param name="direction">Direction.</param>
 	public void go(Vector3 direction){
-		Vector3 tV3 = new Vector3(direction.x,0,direction.z);
-		tV3 = tV3.normalized * motionForce;
-		gameObject.transform.GetComponent<Rigidbody>().AddForce(tV3);
+		if (transform.position.y <= 1f && gameObject.GetComponent<Rigidbody>().velocity.sqrMagnitude < scrGlobal.maxSpeedSqr){ //если не в полёте и скорость не максимальная
+			Vector3 tV3 = new Vector3(direction.x,0,direction.z);
+			tV3 = tV3.normalized * motionForce;
+			gameObject.transform.GetComponent<Rigidbody>().AddForce(tV3);
+		}
 	}
 
 	public void freeze(){
@@ -82,8 +88,8 @@ public class scrBall : MonoBehaviour {
 			objFreeze = GameObject.Instantiate(pfFreeze,new Vector3(transform.position.x,0.05f,transform.position.z), Quaternion.identity);
 			if (objFreeze != null){
 				if (ultraFreezeRadiusTime<=0){
-					objFreeze.GetComponent<scrFreeze>().freeze(scrGlobal.freezeRadius);
-				} else objFreeze.GetComponent<scrFreeze>().freeze(scrGlobal.ultraFreezeRadius);
+					objFreeze.GetComponent<scrFreeze>().freeze(scrGlobal.freezeRadius, gameObject);
+				} else objFreeze.GetComponent<scrFreeze>().freeze(scrGlobal.ultraFreezeRadius, gameObject);
 			} else Debug.Log("objFreeze is null");
 		}
 	}

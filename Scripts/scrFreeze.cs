@@ -10,6 +10,7 @@ public class scrFreeze : MonoBehaviour {
 	float freezeTime = 0.7f; //время распространения поля заморозки
 	float freezeTime2;
 	float fTmp;
+	GameObject parentGameObject;
 	Vector3 tV3;
 
 	// Use this for initialization
@@ -29,42 +30,39 @@ public class scrFreeze : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		Debug.Log("freez fupd");
-		if (FreezIsProcess){
-			Debug.Log("freez 1 1");
-			if (fTmp < freezeTime){
-				Debug.Log("freez 2");
+
+		if (FreezIsProcess){			//если надо рисовать заморозку
+			if (fTmp < freezeTime){ 	//заморозка ещё расширяется
 				fTmp += Time.fixedDeltaTime;
 				tV3.x = freezeRadius * fTmp / freezeTime;
 				if (tV3.x <= 0) tV3.x = 0.05f;
 				tV3.z = tV3.x;
 				gameObject.transform.localScale = tV3;
-			} else {
-				Debug.Log("freez 3");
-				if (fTmp < (freezeTime2)){
-					Debug.Log("freez 4");
+			} else { 						//заморозка уже закончила расширяться
+				if (fTmp < (freezeTime2)){	//заморозка должна снижаться
 					fTmp += Time.fixedDeltaTime;
 					tV3.y = freezeHeight * (freezeTime2 - fTmp);
 					if (tV3.y <= 0) tV3.y = 0.05f;
 					gameObject.transform.localScale = tV3;
-				} else {
+				} else {					//замаразка закончилась - отключаем всё
 					FreezIsProcess = false;
 					tV3.x = 0.1f;
 					tV3.x = freezeHeight;
 					tV3.z = 0.1f;
 					gameObject.transform.localScale = tV3;
-					Destroy(gameObject,0.5f);
+					Destroy(gameObject,0.1f);
 				}
 			}
 		}
 	}
 
-	public void freeze(float _freezeRadius){
+	public void freeze(float _freezeRadius, GameObject parentGO){
 		freezeRadius = _freezeRadius;
 		if (!FreezIsProcess){
 			Debug.Log("freez 1");
 			FreezIsProcess = true;
 			fTmp = 0;
+			parentGameObject = parentGO;
 		}
 	}
 

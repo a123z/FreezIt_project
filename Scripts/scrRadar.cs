@@ -5,6 +5,7 @@ using UnityEngine;
 public class scrRadar : MonoBehaviour {
 	GameObject goTarget;
 
+	//Работа радар: после вызова
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +24,7 @@ public class scrRadar : MonoBehaviour {
 			//if (col.gameObject.transform.position.y <=1.1f){ //не используем - ловим цель и в т.ч. в прыжке
 			if ( !col.gameObject.GetComponent<scrBall>().isFreeze()){ //если не в заморозке
 				goTarget = col.gameObject;
-				//gameObject.GetComponentInParent<scrBot>().SetTarget(col.gameObject); //установим цель
+				gameObject.GetComponentInParent<scrBot>().SetTarget(col.gameObject); //установим цель
 			}
 		}
 	}
@@ -32,7 +33,7 @@ public class scrRadar : MonoBehaviour {
 		
 
 		//if () //обнулять надо только 1 раз при запуске корутины потом просто пропускать пока не найдется цель
-			goTarget = null;
+		goTarget = null;
 		StartCoroutine(radarPing(raRadius));
 		//while (rr < raRadius && goTarget == null){
 		//	((SphereCollider)cRCol).radius += 0.5f;
@@ -42,9 +43,9 @@ public class scrRadar : MonoBehaviour {
 	}
 
 	IEnumerator radarPing(float _radius){
-		float rr = 0;
+		//float rr = 0;
 		Component cRCol = gameObject.GetComponent<SphereCollider>();
-		while (rr < _radius && goTarget == null){
+		while (((SphereCollider)cRCol).radius < _radius && goTarget == null){
 			((SphereCollider)cRCol).radius += 0.5f;
 			yield return new WaitForFixedUpdate();
 		} 
