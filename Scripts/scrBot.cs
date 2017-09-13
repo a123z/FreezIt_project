@@ -34,7 +34,10 @@ public class scrBot : MonoBehaviour {
 				if (goTarget == null) justGo();
 			} else radarTime -= Time.fixedDeltaTime;
 		} else {
-			go2target();
+				go2target();
+				if ((goTarget.transform.position - gameObject.transform.position).sqrMagnitude < scrGlobal.freezerRadiusSqr){
+				gameObject.GetComponent<scrBall>().freezerRun();
+				}
 			}
 	}
 
@@ -67,6 +70,12 @@ public class scrBot : MonoBehaviour {
 
 	public void setJustDirection(Vector3 _direction){
 		justDirection =_direction;
+	}
+
+	public void ClearTarget(GameObject _target){
+		if (_target.Equals(goTarget)){
+			goTarget = null;
+		}
 	}
 
 }

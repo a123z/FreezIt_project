@@ -8,11 +8,14 @@ public static class scrGlobal {
 	public static float ultraForceTime = 15f;
 	public static float maxSpeedSqr = 25f*25f;
 
-	public static float freezeRadius = 10f;
-	public static float ultraFreezeRadius = 15f;
+	public static float freezeTime = 3f;
 
-	public static float freezeTime = 0.7f;
-	public static float ultraFreezeRadiusTime = 2f;
+	public static float freezerRadius = 10f;
+	public static float freezerRadiusSqr = freezerRadius * freezerRadius;
+	public static float ultraFreezerRadius = 15f;
+
+	public static float freezerTime = 0.7f;
+	public static float ultraFreezerRadiusTime = 2f;
 	
 	public static float arenaHalfSizeX = 40f;
 	public static float arenaHalfSizeZ = 40f;

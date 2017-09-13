@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class scrBall : MonoBehaviour {
 	public bool isPlayer = false;
-	public GameObject pfFreeze;
+	public GameObject pfFreezer;
 	public GameObject pfRadar;
 	GameObject objFreeze;
 
@@ -21,12 +21,14 @@ public class scrBall : MonoBehaviour {
 			gameObject.GetComponent<scrController>().enabled = true;
 			gameObject.GetComponent<scrPlayer>().enabled = true;
 			gameObject.GetComponent<Renderer>().material.color = new Color32(177,253,184,255);
+			gameObject.tag = "player";
 		}
 		else{
 			gameObject.GetComponent<scrBot>().enabled = true;
 			gameObject.GetComponent<scrController>().enabled = false;
 			gameObject.GetComponent<scrPlayer>().enabled = false;
 			gameObject.GetComponent<Renderer>().material.color = new Color32(248,212,147,255);
+			gameObject.tag = "bot";
 			GameObject pfR = Instantiate(pfRadar, gameObject.transform.position, Quaternion.identity);
 			pfR.transform.parent = gameObject.transform;
 			pfR.name = "radar";
@@ -35,7 +37,7 @@ public class scrBall : MonoBehaviour {
 
 	void Start () {
 		//objFreeze = gameObject.transform.Find("wave").gameObject;
-		if (pfFreeze == null) Debug.LogError("pfFreeze is null");
+		if (pfFreezer == null) Debug.LogError("pfFreeze is null");
 		objFreeze = null;
 		motionForce = scrGlobal.motionForce; //initial force is same for all
 
@@ -50,6 +52,13 @@ public class scrBall : MonoBehaviour {
 	void FixedUpdate(){
 		if (freezeTime>0){
 			freezeTime -= Time.fixedDeltaTime;
+			if (freezeTime <= 0){
+				if (isPlayer){
+					gameObject.GetComponent<Renderer>().material.color = new Color32(177,253,184,255);
+				} else {
+					gameObject.GetComponent<Renderer>().material.color = new Color32(248,212,147,255);
+				}
+			}
 		}
 		if (ultraForceTime>0){
 			ultraForceTime -= Time.fixedDeltaTime;
@@ -76,6 +85,7 @@ public class scrBall : MonoBehaviour {
 	/// </summary>
 	/// <param name="direction">Direction.</param>
 	public void go(Vector3 direction){
+		if (isFreeze()) return;
 		if (transform.position.y <= 1f && gameObject.GetComponent<Rigidbody>().velocity.sqrMagnitude < scrGlobal.maxSpeedSqr){ //если не в полёте и скорость не максимальная
 			Vector3 tV3 = new Vector3(direction.x,0,direction.z);
 			tV3 = tV3.normalized * motionForce;
@@ -83,13 +93,14 @@ public class scrBall : MonoBehaviour {
 		}
 	}
 
-	public void freeze(){
+	public void freezerRun(){
+		if (isFreeze()) return;
 		if (transform.position.y <= 1f && objFreeze == null){
-			objFreeze = GameObject.Instantiate(pfFreeze,new Vector3(transform.position.x,0.05f,transform.position.z), Quaternion.identity);
+			objFreeze = GameObject.Instantiate(pfFreezer,new Vector3(transform.position.x,0.05f,transform.position.z), Quaternion.identity);
 			if (objFreeze != null){
 				if (ultraFreezeRadiusTime<=0){
-					objFreeze.GetComponent<scrFreeze>().freeze(scrGlobal.freezeRadius, gameObject);
-				} else objFreeze.GetComponent<scrFreeze>().freeze(scrGlobal.ultraFreezeRadius, gameObject);
+					objFreeze.GetComponent<scrFreezer>().freezerRun(scrGlobal.freezerRadius, gameObject);
+				} else objFreeze.GetComponent<scrFreezer>().freezerRun(scrGlobal.ultraFreezerRadius, gameObject);
 			} else Debug.Log("objFreeze is null");
 		}
 	}
@@ -100,13 +111,20 @@ public class scrBall : MonoBehaviour {
 		} else return false;
 	}
 
+	public void doFreeze(){
+		if (!isFreeze()) {
+			freezeTime = scrGlobal.freezeTime;
+			gameObject.GetComponent<Renderer>().material.color = new Color32(148,112,247,255);
+		}
+	}
+
 	public void SetUltraForce(){
 		ultraForceTime += scrGlobal.ultraForceTime;
 		motionForce = scrGlobal.ultraMotionForce;
 	}
 
 	public void setUltraFreezeRadius(){
-		ultraFreezeRadiusTime = scrGlobal.ultraFreezeRadiusTime;
+		ultraFreezeRadiusTime = scrGlobal.ultraFreezerRadiusTime;
 	}
 
 	public void doDeath(){

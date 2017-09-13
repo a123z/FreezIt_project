@@ -24,7 +24,7 @@ public class scrController : MonoBehaviour {
 		}
 
 		if (Input.GetButton("Fire1")){
-			gameObject.GetComponent<scrBall>().freeze();
+			gameObject.GetComponent<scrBall>().freezerRun();
 		}
 	}
 

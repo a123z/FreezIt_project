@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 64332995530707846}
   - component: {fileID: 114998263690787718}
   m_Layer: 0
-  m_Name: pfFreeze
+  m_Name: pfFreezer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,6 +104,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1531978804624298}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89d7b3c9a440bc24f9bd3aab801936d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 05b77bfbd63ec834a8f63a308543c71a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

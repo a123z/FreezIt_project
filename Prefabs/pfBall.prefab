@@ -123,7 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ec7966e45907a54f857831a928996fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radarRadius: 10
 --- !u!114 &114428867130714792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -147,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
-  pfFreeze: {fileID: 1531978804624298, guid: a4d8c63ddbc62bd41876a02740cf62bf, type: 2}
+  pfFreezer: {fileID: 1531978804624298, guid: a4d8c63ddbc62bd41876a02740cf62bf, type: 2}
   pfRadar: {fileID: 1957288761636018, guid: c396348148cfc3a4caa93c90542213fd, type: 2}
 --- !u!135 &135762232500606542
 SphereCollider:
