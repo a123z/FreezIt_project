@@ -22,4 +22,6 @@ public static class scrGlobal {
 
 	public static float radarTimeRepeat = 3f; //3 sec for repeat radar scan
 	public static float radarRadius = 20f;
+
+	public static string txtScoreGONamePrefix = "txtScore";
 }

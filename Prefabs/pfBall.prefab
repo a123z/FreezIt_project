@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 114428867130714792}
   - component: {fileID: 114080860069509160}
   - component: {fileID: 114232050917474530}
+  - component: {fileID: 114898971351726140}
   m_Layer: 0
   m_Name: pfBall
   m_TagString: player
@@ -134,6 +135,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bcc0a96f093b0b4f8f2483cb85eb1ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114898971351726140
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1622066928330352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6cecc5dfa532448b449126f1ec6345, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  num: 0
+  score: 0
 --- !u!114 &114931671586530920
 MonoBehaviour:
   m_ObjectHideFlags: 1
