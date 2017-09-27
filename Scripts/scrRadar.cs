@@ -5,12 +5,14 @@ using UnityEngine;
 public class scrRadar : MonoBehaviour {
 	GameObject goTarget;
 
+	//int radarMode; //1-find target 2-find freezer circle  --пок аделать не будем просто добавим триггер bot-a
+
 	//Работа радар: после вызова
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        gameObject.GetComponent<SphereCollider>().radius = scrGlobal.radarRadius;
+    }
 	
 	// Update is called once per frame
 	void Update () {

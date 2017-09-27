@@ -18,6 +18,13 @@ public class scrBot : MonoBehaviour {
 	void Start () {
 		goRadar = transform.Find("radar").gameObject; //find child gaomeObject
 		if (goRadar == null) Debug.LogError("goRadar not found!");
+
+
+		//фигня получилась - этот коллайдер реагирует на пересечение с коллайдером заморозки и шар замораживается - надо с коллайдером радара делать....
+		/*SphereCollider SColl = gameObject.AddComponent<SphereCollider>();
+		SColl.isTrigger = true;
+		SColl.center = Vector3.zero;
+		SColl.radius = 3f;*/
 	}
 	
 	// Update is called once per frame
@@ -41,9 +48,20 @@ public class scrBot : MonoBehaviour {
 			}
 	}
 
+	void OnTriggerEnter(Collider col){
+		Debug.Log("bot coll 1");
+		if (col.CompareTag("freezer")){
+			Debug.Log("freezer coll 1");
+			if (Random.Range(1,4) < 3) {   //1,4 = 1.2.3
+				gameObject.GetComponent<scrBall>().jump();
+			}
+		}
+	}
+
 	void go2target(){
 		if (goTarget != null){
-			gameObject.GetComponent<scrBall>().go(goTarget.transform.position - gameObject.transform.position);
+			//gameObject.GetComponent<scrBall>().go(goTarget.transform.position  - gameObject.transform.position);
+			gameObject.GetComponent<scrBall>().go(goTarget.transform.position + goTarget.GetComponent<Rigidbody>().velocity  - gameObject.transform.position);
 		}
 	}
 

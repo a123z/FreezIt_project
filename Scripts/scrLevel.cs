@@ -26,7 +26,7 @@ public class scrLevel : MonoBehaviour {
 	}
 
 	void setNumberBalls(){
-		int n = 0;
+		int n = -1;
 		foreach (GameObject go in GameObject.FindGameObjectsWithTag("player")) {
 			n++;
 			go.GetComponent<scrScore>().num = n;
@@ -36,11 +36,12 @@ public class scrLevel : MonoBehaviour {
 			go.GetComponent<scrScore>().num = n;
 		}
 		GameObject txtGO;
-		for (int i = 0; i < n; i++){
+		for (int i = 0; i <= n; i++){
 			txtGO = GameObject.Instantiate(pfTxtScore);
-			txtGO.transform.parent = goCanvas.transform;
+			txtGO.transform.SetParent(goCanvas.transform);
 			txtGO.name = scrGlobal.txtScoreGONamePrefix + i.ToString();
-			txtGO.transform.position = new Vector3(0,-20*i,0);
+			txtGO.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-20*i);
+			//txtGO.GetComponent<RectTransform>().position = new Vector3(0,-20*i,0);
 			txtGO.GetComponent<UnityEngine.UI.Text>().text = "Ball"+i.ToString()+" - 0" ;
 		}
 

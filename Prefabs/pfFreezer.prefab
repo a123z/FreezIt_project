@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114998263690787718}
   m_Layer: 0
   m_Name: pfFreezer
-  m_TagString: Untagged
+  m_TagString: freezer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

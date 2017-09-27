@@ -33,6 +33,7 @@ public class scrFreezer : MonoBehaviour {
 		if (otherBall.gameObject != parentGameObject ){
 			if (otherBall.CompareTag("player") || otherBall.CompareTag("bot")){
 				otherBall.gameObject.GetComponent<scrBall>().doFreeze();
+				parentGameObject.GetComponent<scrScore>().ScorePlus(1);
 				if (parentGameObject.CompareTag("bot")){
 					parentGameObject.GetComponent<scrBot>().ClearTarget(otherBall.gameObject);
 				}

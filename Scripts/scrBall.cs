@@ -19,14 +19,14 @@ public class scrBall : MonoBehaviour {
 		if (isPlayer){
 			gameObject.GetComponent<scrBot>().enabled = false;
 			gameObject.GetComponent<scrController>().enabled = true;
-			gameObject.GetComponent<scrPlayer>().enabled = true;
+			gameObject.GetComponent<scrMoveCamera>().enabled = true;
 			gameObject.GetComponent<Renderer>().material.color = new Color32(177,253,184,255);
 			gameObject.tag = "player";
 		}
 		else{
 			gameObject.GetComponent<scrBot>().enabled = true;
 			gameObject.GetComponent<scrController>().enabled = false;
-			gameObject.GetComponent<scrPlayer>().enabled = false;
+			gameObject.GetComponent<scrMoveCamera>().enabled = false;
 			gameObject.GetComponent<Renderer>().material.color = new Color32(248,212,147,255);
 			gameObject.tag = "bot";
 			GameObject pfR = Instantiate(pfRadar, gameObject.transform.position, Quaternion.identity);
@@ -40,9 +40,9 @@ public class scrBall : MonoBehaviour {
 		if (pfFreezer == null) Debug.LogError("pfFreeze is null");
 		objFreeze = null;
 		motionForce = scrGlobal.motionForce; //initial force is same for all
+        gameObject.GetComponent<Rigidbody>().maxAngularVelocity = 20f;
 
-
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -74,6 +74,7 @@ public class scrBall : MonoBehaviour {
 	}
 
 	public void jump(){
+		if (isFreeze()) return;
 		if (gameObject.transform.position.y < 1.1f){
 			gameObject.transform.GetComponent<Rigidbody>().AddForce(0,50,0);
 		}
