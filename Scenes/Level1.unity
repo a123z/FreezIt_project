@@ -313,6 +313,11 @@ Prefab:
       propertyPath: m_Name
       value: pfBall2
       objectReference: {fileID: 0}
+    - target: {fileID: 82654491374826306, guid: e17bdae3e313f31498b5ba77bd0087b8,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e17bdae3e313f31498b5ba77bd0087b8, type: 2}
   m_IsPrefabParent: 0
@@ -383,7 +388,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1053664482}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!124 &1053664484
 Behaviour:
   m_ObjectHideFlags: 0
@@ -650,6 +655,23 @@ Prefab:
       propertyPath: isPlayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 82654491374826306, guid: e17bdae3e313f31498b5ba77bd0087b8,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e17bdae3e313f31498b5ba77bd0087b8, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &2111056028 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1622066928330352, guid: e17bdae3e313f31498b5ba77bd0087b8,
+    type: 2}
+  m_PrefabInternal: {fileID: 1629359554}
+--- !u!81 &2111056029
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2111056028}
+  m_Enabled: 1

@@ -46,7 +46,8 @@ public class scrBot : MonoBehaviour {
 				gameObject.GetComponent<scrBall>().freezerRun();
 				}
 			}
-	}
+        goRadar.GetComponent<scrRadar>().Check4Freezer();
+    }
 
 	void OnTriggerEnter(Collider col){
 		Debug.Log("bot coll 1");
