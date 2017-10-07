@@ -31,8 +31,14 @@ public class scrBall : MonoBehaviour {
 			gameObject.tag = "bot";
 			GameObject pfR = Instantiate(pfRadar, gameObject.transform.position, Quaternion.identity);
 			pfR.transform.parent = gameObject.transform;
-			pfR.name = "radar";
-		}
+			pfR.name = "radar1";//FindTarget
+            pfR.GetComponent<scrRadar>().SetMode(1);
+
+            GameObject pfR2 = Instantiate(pfRadar, gameObject.transform.position, Quaternion.identity);
+            pfR2.transform.parent = gameObject.transform;
+            pfR2.name = "radar2";//is need jump
+            pfR2.GetComponent<scrRadar>().SetMode(2);
+        }
 	}
 
 	void Start () {

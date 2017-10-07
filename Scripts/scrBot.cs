@@ -5,8 +5,9 @@ using UnityEngine;
 public class scrBot : MonoBehaviour {
 	
 
-	GameObject goRadar;
-	GameObject goTarget;
+	GameObject goRadar1;
+    GameObject goRadar2;
+    GameObject goTarget;
         
 	float radarTime = scrGlobal.radarTimeRepeat;
 	float radarRadius = scrGlobal.radarRadius;
@@ -16,16 +17,20 @@ public class scrBot : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		goRadar = transform.Find("radar").gameObject; //find child gaomeObject
-		if (goRadar == null) Debug.LogError("goRadar not found!");
+		goRadar1 = transform.Find("radar1").gameObject; //find child gaomeObject
+		if (goRadar1 == null) Debug.LogError("goRadar1 not found!");
+        goRadar2 = transform.Find("radar2").gameObject; //find child gaomeObject
+        if (goRadar2 == null) Debug.LogError("goRadar2 not found!");
 
+        goRadar1.GetComponent<scrRadar>().SetRadius(radarRadius);
+        goRadar2.GetComponent<scrRadar>().SetRadius(5f);
 
-		//фигня получилась - этот коллайдер реагирует на пересечение с коллайдером заморозки и шар замораживается - надо с коллайдером радара делать....
-		/*SphereCollider SColl = gameObject.AddComponent<SphereCollider>();
+        //фигня получилась - этот коллайдер реагирует на пересечение с коллайдером заморозки и шар замораживается - надо с коллайдером радара делать....
+        /*SphereCollider SColl = gameObject.AddComponent<SphereCollider>();
 		SColl.isTrigger = true;
 		SColl.center = Vector3.zero;
 		SColl.radius = 3f;*/
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -36,7 +41,7 @@ public class scrBot : MonoBehaviour {
 		if (goTarget == null){
 			if (radarTime<=0){
 				Debug.Log("Run radar");
-				FindTarget();
+                goRadar1.GetComponent<scrRadar>().SetOnRadar(true);
 				radarTime = scrGlobal.radarTimeRepeat;
 				if (goTarget == null) justGo();
 			} else radarTime -= Time.fixedDeltaTime;
@@ -46,11 +51,9 @@ public class scrBot : MonoBehaviour {
 				gameObject.GetComponent<scrBall>().freezerRun();
 				}
 			}
-        goRadar.GetComponent<scrRadar>().Check4Freezer();
     }
 
 	void OnTriggerEnter(Collider col){
-		Debug.Log("bot coll 1");
 		if (col.CompareTag("freezer")){
 			Debug.Log("freezer coll 1");
 			if (Random.Range(1,4) < 3) {   //1,4 = 1.2.3
@@ -76,10 +79,6 @@ public class scrBot : MonoBehaviour {
 		}
 
 		gameObject.GetComponent<scrBall>().go(justDirection);
-	}
-
-	void FindTarget(){
-		goTarget = goRadar.GetComponent<scrRadar>().FindTarget(radarRadius);
 	}
 
 	public void SetTarget(GameObject target){ //вызывается из скрипта радара при коллизии коллайдера радара с целью

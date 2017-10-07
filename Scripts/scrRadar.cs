@@ -26,6 +26,13 @@ public class scrRadar : MonoBehaviour {
 	void Update () {
 		
 	}
+    void FixedUpdate()
+    {
+        if (radarMode == 2) //сместим коллайдер по ходу движения - прыгать надо чуть раньше - чем быстрее едет тем раньше прыгать
+        {
+            ((SphereCollider)cRCol).center = gameObject.GetComponentInParent<Rigidbody>().velocity;
+        }
+    }
 
 	void OnTriggerEnter(Collider col){
 		
@@ -40,6 +47,7 @@ public class scrRadar : MonoBehaviour {
                     { //если не в заморозке
                         goTarget = col.gameObject;
                         gameObject.GetComponentInParent<scrBot>().SetTarget(col.gameObject); //установим цель
+                        SetOnRadar(false); //цель нашли - выключить радар
                     }
                 }
                 break;
@@ -53,62 +61,22 @@ public class scrRadar : MonoBehaviour {
 	}
 
     /// <summary>
-    /// Поиск цели вокруг
+    /// Устанавливает режим работы. Обычно вызывается при создании объекта
     /// </summary>
-    /// <param name="raRadius">радиус внутри которого ищется цель, преременная т.к. может быть больше при бонусе</param>
-    /// <returns></returns>
-	public GameObject FindTarget(float raRadius){ 
-		//if () //обнулять надо только 1 раз при запуске корутины потом просто пропускать пока не найдется цель
-		goTarget = null;
-        if (!pingIsRun) //ищем цель даже если сейчас работает контроль прыжка перед заморозкой
-        {
-            StartCoroutine(Ping(raRadius, 1));
-        }
-		return goTarget;
-	}
-
-
-    public void Check4Freezer()
+    /// <param name="_mode">режим работы радара 1-поиск цели 2-надо ли прыгать</param>
+    public void SetMode(int _mode)
     {
-        if (!pingIsRun)
-        {
-            StartCoroutine(Ping(5f, 2));
-        }
-    }
-
-    IEnumerator Ping(float _radius, int _mode)
-    {
-        pingIsRun = true;
         radarMode = _mode;
-        ((SphereCollider)cRCol).radius = _radius;
-        if (_mode == 1)
-        {
-            int pingCount = 5;
-            while (pingCount > 0 && goTarget == null)
-            {
-                yield return new WaitForFixedUpdate();
-            }
-        }
-        else 
-        if (_mode == 2)
-        {
-            int pingCount = 2;
-            while (pingCount > 0)
-            {
-                yield return new WaitForFixedUpdate();
-            }
-        }
-        ((SphereCollider)cRCol).radius = 0;
-        pingIsRun = false;
     }
 
-    IEnumerator radarPing(float _radius){
-		//float rr = 0;
-		Component cRCol = gameObject.GetComponent<SphereCollider>();
-		while (((SphereCollider)cRCol).radius < _radius && goTarget == null){
-			((SphereCollider)cRCol).radius += 0.5f;
-			yield return new WaitForFixedUpdate();
-		} 
-		((SphereCollider)cRCol).radius = 0;
-	}
+    public void SetRadius(float _radius)
+    {
+        ((SphereCollider)cRCol).radius = _radius;
+    }
+
+    public void SetOnRadar(bool _on) {
+        ((SphereCollider)cRCol).enabled = _on;
+    }
+
+  
 }
